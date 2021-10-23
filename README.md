@@ -6,3 +6,5 @@ Im Ordner befindet sich eine Datei namens "points.txt" welche man als Text(GDI) 
 Diese Datei updated sich instant, wenn man die Buttons/das Numpad benutzt.
 
 Viel Spaß mit dem Counter und möge Dark Souls euch gnädig sein, außer ihr ermordet Solaire. 
+
+![image](https://user-images.githubusercontent.com/43956685/138550815-0d0683d6-577f-47a1-9f13-b41613a6c1c4.png)
