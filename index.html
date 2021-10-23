@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+        <title>DLDU Counter by Mecke_Dev</title>
+      </head>
+
+    <body class="bg-dark" onload="set_points()">
+        <button type="button" id="points" class="btn btn-success w-100" style="font-size: 30vh; margin-top: 1vh;" disabled>0</button>
+        <div class="steuerung">
+            <button type="button" id="points" onclick=change_points(5) class="btn btn-success float-left" style="font-size: 5vh; margin: 8px 0px 0px 10px; width:23%;">+5<br/> Numpad 7</button>
+            <button type="button" id="points" onclick=change_points(-5) class="btn btn-danger float-left" style="font-size: 5vh; margin: 8px 5px 0px 5px; width:23%;">-5<br/> Numpad 4</button>
+            <button type="button" id="points" onclick=change_points(3) class="btn btn-success float-left" style="font-size: 5vh; margin: 8px 0px 0px 0px; width:23%;">+3<br/> Numpad 9</button>
+            <button type="button" id="points" onclick=change_points(-3) class="btn btn-danger float-left" style="font-size: 5vh; margin: 8px 0px 0px 5px; width:23%;">-3<br/> Numpad 6</button>
+        </div>
+        <div id="reset">
+            <button type="button" id="points" onclick=change_points(0) class="btn btn-danger float-left" style="font-size: 5vh; margin: 8px 0px 0px 10px; width:96%;">Reset<br/> Numpad 0</button>
+        </div>
+    </body>
+    <script>
+
+    var gkm = require('gkm');
+    var fs = require('fs');
+    const path = require('path');
+    const point_file = __dirname + '\\points.txt';
+    console.log(__dirname)
+
+    fs.readFile(point_file, 'utf-8', function(err, data) {
+        if (err) throw err;
+        points = parseInt(data)
+    })
+
+    gkm.events.on('key.*', function(data) {
+
+        fs.readFile(point_file, 'utf-8', function(err, data) {
+            if (err) throw err;
+            points = parseInt(data)
+        })
+
+        if(this.event == "key.pressed"){
+            if(data == "NumPad 7"){
+                change_points(5)
+            }
+            if(data == "NumPad 4"){
+                change_points(-5)
+            }
+            if(data == "NumPad 9"){
+                change_points(3)
+            }
+            if(data == "NumPad 6"){
+                change_points(-3)
+            }
+            if(data == "NumPad 0"){
+                change_points(0)
+            }
+        }
+    });
+
+    function set_points(){
+        fs.readFile(point_file, 'utf-8', function(err, data) {
+            if (err) throw err;
+            document.getElementById("points").innerHTML = data
+        })
+    }
+
+    function change_points(p){
+
+        fs.readFile(point_file, 'utf-8', function(err, data) {
+            if (err) throw err;
+            points = parseInt(data)
+        })
+
+        if(parseInt(p) == 0){
+            points = 0
+        }
+        else{
+            points += parseInt(p)
+
+            if (points < 0){
+                points = 0
+            }
+        }
+        
+        points = points.toString()
+
+        fs.writeFileSync(point_file, points)
+
+        document.getElementById("points").innerHTML = points
+
+    }
+
+    </script>
+</html>
